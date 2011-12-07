@@ -94,9 +94,12 @@ class Game():
         if self._orientation == 'horizontal':
             self.hline.hide()
             self.vline.set_layer(1000)
-        else:
+        elif self._orientation == 'vertical':
             self.hline.set_layer(1000)
             self.vline.hide()
+        else:
+            self.hline.set_layer(1000)
+            self.vline.set_layer(1000)
 
         # Clear dots
         for dot in self._dots:
@@ -107,9 +110,12 @@ class Game():
         if self._orientation == 'horizontal':
             self._set_label(
                 _('Click on the dots to make a horizontal reflection.'))
-        else:
+        elif self._orientation == 'vertical':
             self._set_label(
                 _('Click on the dots to make a vertical reflection.'))
+        else:
+            self._set_label(
+                _('Click on the dots to make a bilateral reflection.'))
 
     def _initiating(self):
         return self._activity.initiating
@@ -157,7 +163,21 @@ class Game():
                         return False
             self._set_label(_('good work'))
             return True
+        if self._orientation == 'vertical':
+            for y in range(int(SIX / 2)):
+                for x in range(TEN):
+                    if self._dots[y * TEN + x].type != \
+                            self._dots[(SIX - y - 1) * TEN + x].type:
+                        self._set_label(_('keep trying'))
+                        return False
+            self._set_label(_('good work'))
         else:
+            for y in range(SIX):
+                for x in range(SIX):
+                    if self._dots[y * TEN + x].type != \
+                            self._dots[y * TEN + TEN - x - 1].type:
+                        self._set_label(_('keep trying'))
+                        return False
             for y in range(int(SIX / 2)):
                 for x in range(TEN):
                     if self._dots[y * TEN + x].type != \

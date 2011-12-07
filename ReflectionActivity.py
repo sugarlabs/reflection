@@ -104,6 +104,11 @@ class ReflectionActivity(activity.Activity):
             cb_arg='vertical',
             tooltip=_('Start a new vertical-reflection game.'))
 
+        self._new_game_button_b = button_factory(
+            'new-game-bilateral', self.toolbar, self._new_game_cb,
+            cb_arg='bilateral',
+            tooltip=_('Start a new bilateral-reflection game.'))
+
         self.status = label_factory(self.toolbar, '')
 
         if _have_toolbox:
