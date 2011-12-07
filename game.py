@@ -12,7 +12,7 @@
 
 
 import gtk
-import gobject
+import cairo
 
 from random import uniform
 
@@ -134,7 +134,7 @@ class Game():
         self._all_clear()
 
         # Fill in a few dots to start
-        for i in range(25):
+        for i in range(int(TEN * SIX / 2)):
             n = int(uniform(0, TEN * SIX))
             self._dots[n].type = int(uniform(0, 4))
             self._dots[n].set_shape(self._new_dot(
@@ -261,11 +261,21 @@ class Game():
             self._fill = color
             self._svg_width = self._dot_size
             self._svg_height = self._dot_size
-            self._dot_cache[color] = svg_str_to_pixbuf(
+            pixbuf = svg_str_to_pixbuf(
                 self._header() + \
                 self._circle(self._dot_size / 2., self._dot_size / 2.,
                              self._dot_size / 2.) + \
                 self._footer())
+
+            surface = cairo.ImageSurface(cairo.FORMAT_ARGB32,
+                                         self._svg_width, self._svg_height)
+            context = cairo.Context(surface)
+            context = gtk.gdk.CairoContext(context)
+            context.set_source_pixbuf(pixbuf, 0, 0)
+            context.rectangle(0, 0, self._svg_width, self._svg_height)
+            context.fill()
+            self._dot_cache[color] = surface
+
         return self._dot_cache[color]
 
     def _line(self, vertical=True):
