@@ -151,9 +151,6 @@ class Game():
                     self._colors[self._dots[i].type]))
         self._set_orientation()
 
-        if self.we_are_sharing:
-            self._parent.start_new_game()
-
     def save_game(self):
         ''' Return dot list and orientation for saving to Journal or
         sharing '''
