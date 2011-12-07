@@ -248,7 +248,7 @@ state=%d' % (id, initiator, type, service, params, state))
             return
         self._processing_methods[command][0](payload)
 
-    def start_new_game(self):
+    def send_new_game(self):
         ''' Send a new orientation, grid to all players '''
         self.send_event('n|%s' % (json_dump(self._game.save_game())))
 
@@ -257,7 +257,7 @@ state=%d' % (id, initiator, type, service, params, state))
         (dot_list, orientation) = json_load(payload)
         self._game.restore_game(dot_list, orientation)
 
-    def send_button_press(self, dot, color):
+    def send_dot_click(self, dot, color):
         ''' Send a dot click to all the players '''
         self.send_event('p|%s' % (json_dump([dot, color])))
 

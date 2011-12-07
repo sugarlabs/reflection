@@ -141,7 +141,7 @@ class Game():
                     self._colors[self._dots[n].type]))
 
         if self.we_are_sharing:
-            self._parent.start_new_game()
+            self._parent.send_new_game()
 
     def restore_game(self, dot_list, orientation):
         ''' Restore a game from the Journal or share '''
@@ -178,8 +178,8 @@ class Game():
             self._test_game_over()
 
             if self.we_are_sharing:
-                self._parent.send_button_press(self._dots.index(spr),
-                                               spr.type)
+                self._parent.send_dot_click(self._dots.index(spr),
+                                            spr.type)
         return True
 
     def remote_button_press(self, dot, color):
