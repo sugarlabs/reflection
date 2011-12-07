@@ -180,7 +180,7 @@ class ReflectionActivity(activity.Activity):
     def _new_tube_common(self, sharer):
         """ Joining and sharing are mostly the same... """
         if self._shared_activity is None:
-            print("Error: Failed to share or join activity ... \
+            _logger.debug("Error: Failed to share or join activity ... \
                 _shared_activity is null in _shared_cb()")
             return
 
@@ -195,14 +195,15 @@ class ReflectionActivity(activity.Activity):
             'NewTube', self._new_tube_cb)
 
         if sharer:
-            print('This is my activity: making a tube...')
+            _logger.debug('This is my activity: making a tube...')
             id = self.tubes_chan[telepathy.CHANNEL_TYPE_TUBES].OfferDBusTube(
                 SERVICE, {})
         else:
-            print('I am joining an activity: waiting for a tube...')
+            _logger.debug('I am joining an activity: waiting for a tube...')
             self.tubes_chan[telepathy.CHANNEL_TYPE_TUBES].ListTubes(
                 reply_handler=self._list_tubes_reply_cb,
                 error_handler=self._list_tubes_error_cb)
+        self._game.set_sharing(True)
 
     def _list_tubes_reply_cb(self, tubes):
         """ Reply to a list request. """
@@ -211,12 +212,12 @@ class ReflectionActivity(activity.Activity):
 
     def _list_tubes_error_cb(self, e):
         """ Log errors. """
-        print('Error: ListTubes() failed: %s', e)
+        _logger.debug('Error: ListTubes() failed: %s' % (e))
 
     def _new_tube_cb(self, id, initiator, type, service, params, state):
         """ Create a new tube. """
-        print('New tube: ID=%d initator=%d type=%d service=%s params=%r \
-state=%d' % (id, initiator, type, service, params, state))
+        _logger.debug('New tube: ID=%d initator=%d type=%d service=%s \
+params=%r state=%d' % (id, initiator, type, service, params, state))
 
         if (type == telepathy.TUBE_TYPE_DBUS and service == SERVICE):
             if state == telepathy.TUBE_STATE_LOCAL_PENDING:
@@ -244,7 +245,7 @@ state=%d' % (id, initiator, type, service, params, state))
         try:
             command, payload = event_message.split('|', 2)
         except ValueError:
-            print('Could not split event message %s' % (event_message))
+            _logger.debug('Could not split event message %s' % (event_message))
             return
         self._processing_methods[command][0](payload)
 
