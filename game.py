@@ -45,7 +45,9 @@ class Game():
         self._colors.append('#000000')
 
         self._canvas = canvas
-        parent.show_all()
+        if parent is not None:
+            parent.show_all()
+            self._patent = parent
 
         self._canvas.set_flags(gtk.CAN_FOCUS)
         self._canvas.add_events(gtk.gdk.BUTTON_PRESS_MASK)
@@ -58,6 +60,7 @@ class Game():
         self._dot_size = int(DOT_SIZE * self._scale)
         self._space = int(self._dot_size / 5.)
         self._orientation = 'horizontal'
+        self.we_are_sharing = False
 
         # Generate the sprites we'll need...
         self._sprites = Sprites(self._canvas)
@@ -137,6 +140,9 @@ class Game():
             self._dots[n].set_shape(self._new_dot(
                     self._colors[self._dots[n].type]))
 
+        if self.we_are_sharing:
+            self._parent.start_new_game()
+
     def restore_game(self, dot_list, orientation):
         ''' Restore a game from the Journal or share '''
         for i, dot in enumerate(dot_list):
@@ -145,13 +151,16 @@ class Game():
                     self._colors[self._dots[i].type]))
         self._set_orientation()
 
+        if self.we_are_sharing:
+            self._parent.start_new_game()
+
     def save_game(self):
         ''' Return dot list and orientation for saving to Journal or
         sharing '''
         dot_list = []
         for dot in self._dots:
             dot_list.append(dot.type)
-        return (self._orientation, dot_list)
+        return (dot_list, self._orientation)
 
     def _set_label(self, string):
         ''' Set the label in the toolbar or the window frame. '''
@@ -170,7 +179,19 @@ class Game():
             spr.type %= 4
             spr.set_shape(self._new_dot(self._colors[spr.type]))
             self._test_game_over()
+
+            if self.we_are_sharing:
+                self._parent.send_button_press(self._dots.index(spr),
+                                               spr.type)
         return True
+
+    def remote_button_press(self, dot, color):
+        ''' Receive a button press from a sharer '''
+        self._dots[dot].type = color
+        self._dots.set_shape(self._new_dot(self._colors[color]))
+
+    def set_sharing(self, share=True):
+        self.we_are_sharing = share
 
     def _test_game_over(self):
         ''' Check to see if game is over '''
@@ -237,15 +258,18 @@ class Game():
 
     def _new_dot(self, color):
         ''' generate a dot of a color color '''
-        self._stroke = color
-        self._fill = color
-        self._svg_width = self._dot_size
-        self._svg_height = self._dot_size
-        return svg_str_to_pixbuf(
-            self._header() + \
-            self._circle(self._dot_size / 2., self._dot_size / 2.,
-                         self._dot_size / 2.) + \
-            self._footer())
+        self._dot_cache = {}
+        if not color in self._dot_cache:
+            self._stroke = color
+            self._fill = color
+            self._svg_width = self._dot_size
+            self._svg_height = self._dot_size
+            self._dot_cache[color] = svg_str_to_pixbuf(
+                self._header() + \
+                self._circle(self._dot_size / 2., self._dot_size / 2.,
+                             self._dot_size / 2.) + \
+                self._footer())
+        return self._dot_cache[color]
 
     def _line(self, vertical=True):
         ''' Generate a center line '''
