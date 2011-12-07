@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-06 20:53-0500\n"
+"POT-Creation-Date: 2011-12-07 14:46-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,34 +21,42 @@ msgstr ""
 msgid "Reflection"
 msgstr ""
 
-#: game.py:111
+#: game.py:119
 msgid "Click on the dots to make a horizontal reflection."
 msgstr ""
 
-#: game.py:114
+#: game.py:122
 msgid "Click on the dots to make a vertical reflection."
 msgstr ""
 
-#: game.py:158 game.py:167
+#: game.py:125
+msgid "Click on the dots to make a bilateral reflection."
+msgstr ""
+
+#: game.py:200 game.py:209 game.py:217 game.py:223
 msgid "keep trying"
 msgstr ""
 
-#: game.py:160 game.py:169
+#: game.py:202 game.py:211 game.py:225
 msgid "good work"
 msgstr ""
 
-#: game.py:179
+#: game.py:235
 msgid "Game over"
 msgstr ""
 
-#: ReflectionActivity.py:106
+#: ReflectionActivity.py:101
 msgid "Game"
 msgstr ""
 
-#: ReflectionActivity.py:114
+#: ReflectionActivity.py:109
 msgid "Start a new horizontal-reflection game."
 msgstr ""
 
-#: ReflectionActivity.py:119
+#: ReflectionActivity.py:114
 msgid "Start a new vertical-reflection game."
+msgstr ""
+
+#: ReflectionActivity.py:119
+msgid "Start a new bilateral-reflection game."
 msgstr ""
