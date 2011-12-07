@@ -91,6 +91,16 @@ class Game():
         self._press = None
         self.saw_game_over = False
 
+        # Clear dots
+        for dot in self._dots:
+            if dot.type > 0:
+                dot.type = 0
+                dot.set_shape(self._new_dot(self._colors[0]))
+
+        self._set_orientation()
+
+    def _set_orientation(self):
+        ''' Set bar and message for current orientation '''
         if self._orientation == 'horizontal':
             self.hline.hide()
             self.vline.set_layer(1000)
@@ -100,12 +110,6 @@ class Game():
         else:
             self.hline.set_layer(1000)
             self.vline.set_layer(1000)
-
-        # Clear dots
-        for dot in self._dots:
-            if dot.type > 0:
-                dot.type = 0
-                dot.set_shape(self._new_dot(self._colors[0]))
 
         if self._orientation == 'horizontal':
             self._set_label(
@@ -132,6 +136,22 @@ class Game():
             self._dots[n].type = int(uniform(0, 4))
             self._dots[n].set_shape(self._new_dot(
                     self._colors[self._dots[n].type]))
+
+    def restore_game(self, dot_list, orientation):
+        ''' Restore a game from the Journal or share '''
+        for i, dot in enumerate(dot_list):
+            self._dots[i].type = dot
+            self._dots[i].set_shape(self._new_dot(
+                    self._colors[self._dots[i].type]))
+        self._set_orientation()
+
+    def save_game(self):
+        ''' Return dot list and orientation for saving to Journal or
+        sharing '''
+        dot_list = []
+        for dot in self._dots:
+            dot_list.append(dot.type)
+        return (self._orientation, dot_list)
 
     def _set_label(self, string):
         ''' Set the label in the toolbar or the window frame. '''
@@ -232,10 +252,6 @@ class Game():
         if vertical:
             self._svg_width = 3
             self._svg_height = self._height
-            _logger.debug(
-                self._header() + \
-                self._rect(3, self._height, 0, 0) + \
-                self._footer())
             return svg_str_to_pixbuf(
                 self._header() + \
                 self._rect(3, self._height, 0, 0) + \

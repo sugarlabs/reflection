@@ -63,8 +63,10 @@ class ReflectionActivity(activity.Activity):
 
         self._game = Game(canvas, parent=self, colors=self.colors)
 
-        # TODO: Restore game state from Journal or start new game
-        self._game.new_game('horizontal')
+        if 'dotlist' in self.metadata:
+            self._restore()
+        else:
+            self._game.new_game('horizontal')
 
     def _setup_toolbars(self, have_toolbox):
         """ Setup the toolbars. """
@@ -126,8 +128,23 @@ class ReflectionActivity(activity.Activity):
 
     def write_file(self, file_path):
         """ Write the grid status to the Journal """
-        return
+        (orientation, dot_list) = self._game.save_game()
+        self.metadata['orientation'] = orientation
+        self.metadata['dotlist'] = ''
+        for dot in dot_list:
+            self.metadata['dotlist'] += str(dot)
+            if dot_list.index(dot) < len(dot_list) - 1:
+                self.metadata['dotlist'] += ' '
 
     def _restore(self):
         """ Restore the game state from metadata """
-        return
+        if 'orientation' in self.metadata:
+            orientation = self.metadata['orientation']
+        else:
+            orientation = 'horizontal'
+
+        dot_list = []
+        dots = self.metadata['dotlist'].split()
+        for dot in dots:
+            dot_list.append(int(dot))
+        self._game.restore_game(dot_list, orientation)
