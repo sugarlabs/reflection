@@ -1,5 +1,15 @@
 NEWS
 
+2
+
+ENHANCEMENTS:
+* new bilateral symmetry game
+* save/restore game state to Journal
+* enable sharing
+
+BUG_FIX:
+* cache dot shapes/colors
+
 1
 
 * New project
