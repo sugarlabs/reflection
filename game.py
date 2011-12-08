@@ -47,7 +47,7 @@ class Game():
         self._canvas = canvas
         if parent is not None:
             parent.show_all()
-            self._patent = parent
+            self._parent = parent
 
         self._canvas.set_flags(gtk.CAN_FOCUS)
         self._canvas.add_events(gtk.gdk.BUTTON_PRESS_MASK)
@@ -141,6 +141,7 @@ class Game():
                     self._colors[self._dots[n].type]))
 
         if self.we_are_sharing:
+            _logger.debug('sending a new game')
             self._parent.send_new_game()
 
     def restore_game(self, dot_list, orientation):
@@ -149,6 +150,7 @@ class Game():
             self._dots[i].type = dot
             self._dots[i].set_shape(self._new_dot(
                     self._colors[self._dots[i].type]))
+        self._orientation = orientation
         self._set_orientation()
 
     def save_game(self):
@@ -157,7 +159,7 @@ class Game():
         dot_list = []
         for dot in self._dots:
             dot_list.append(dot.type)
-        return (dot_list, self._orientation)
+        return [dot_list, self._orientation]
 
     def _set_label(self, string):
         ''' Set the label in the toolbar or the window frame. '''
@@ -178,6 +180,7 @@ class Game():
             self._test_game_over()
 
             if self.we_are_sharing:
+                _logger.debug('sending a click to the share')
                 self._parent.send_dot_click(self._dots.index(spr),
                                             spr.type)
         return True
@@ -185,9 +188,10 @@ class Game():
     def remote_button_press(self, dot, color):
         ''' Receive a button press from a sharer '''
         self._dots[dot].type = color
-        self._dots.set_shape(self._new_dot(self._colors[color]))
+        self._dots[dot].set_shape(self._new_dot(self._colors[color]))
 
     def set_sharing(self, share=True):
+        _logger.debug('enabling sharing')
         self.we_are_sharing = share
 
     def _test_game_over(self):

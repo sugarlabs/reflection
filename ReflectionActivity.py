@@ -28,6 +28,7 @@ from toolbar_utils import button_factory, label_factory, separator_factory
 from utils import json_load, json_dump
 
 import telepathy
+import dbus
 from dbus.service import signal
 from dbus.gobject_service import ExportedGObject
 from sugar.presence import presenceservice
@@ -51,7 +52,11 @@ class ReflectionActivity(activity.Activity):
 
     def __init__(self, handle):
         """ Initialize the toolbars and the game board """
-        super(ReflectionActivity, self).__init__(handle)
+        try:
+            super(ReflectionActivity, self).__init__(handle)
+        except dbus.exceptions.DBusException, e:
+            _logger.error(str(e))
+
         self.nick = profile.get_nick_name()
         if profile.get_color() is not None:
             self.colors = profile.get_color().to_string().split(',')
@@ -59,6 +64,7 @@ class ReflectionActivity(activity.Activity):
             self.colors = ['#A0FFA0', '#FF8080']
 
         self._setup_toolbars(_have_toolbox)
+        self._setup_dispatch_table()
 
         # Create a canvas
         canvas = gtk.DrawingArea()
@@ -69,6 +75,7 @@ class ReflectionActivity(activity.Activity):
         self.show_all()
 
         self._game = Game(canvas, parent=self, colors=self.colors)
+        self._setup_presence_service()
 
         if 'dotlist' in self.metadata:
             self._restore()
@@ -135,7 +142,7 @@ class ReflectionActivity(activity.Activity):
 
     def write_file(self, file_path):
         """ Write the grid status to the Journal """
-        (dot_list, orientation) = self._game.save_game()
+        [dot_list, orientation] = self._game.save_game()
         self.metadata['orientation'] = orientation
         self.metadata['dotlist'] = ''
         for dot in dot_list:
@@ -255,7 +262,7 @@ params=%r state=%d' % (id, initiator, type, service, params, state))
 
     def _receive_new_game(self, payload):
         ''' Sharer can start a new game. '''
-        (dot_list, orientation) = json_load(payload)
+        [dot_list, orientation] = json_load(payload)
         self._game.restore_game(dot_list, orientation)
 
     def send_dot_click(self, dot, color):
