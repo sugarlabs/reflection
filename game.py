@@ -75,6 +75,7 @@ class Game():
                            y * (self._dot_size + self._space),
                            self._new_dot(self._colors[0])))
                 self._dots[-1].type = 0  # not set
+                self._dots[-1].set_label_attributes(40)
 
         self.vline = Sprite(self._sprites,
                             int(self._width / 2.) - 1,
@@ -99,6 +100,7 @@ class Game():
             if dot.type > 0:
                 dot.type = 0
                 dot.set_shape(self._new_dot(self._colors[0]))
+                dot.set_label('')
 
         self._set_orientation()
 
@@ -194,6 +196,10 @@ class Game():
         _logger.debug('enabling sharing')
         self.we_are_sharing = share
 
+    def _smile(self):
+        for dot in self._dots:
+            dot.set_label(':)')
+
     def _test_game_over(self):
         ''' Check to see if game is over '''
         if self._orientation == 'horizontal':
@@ -204,6 +210,7 @@ class Game():
                         self._set_label(_('keep trying'))
                         return False
             self._set_label(_('good work'))
+            self._smile()
             return True
         if self._orientation == 'vertical':
             for y in range(int(SIX / 2)):
@@ -227,6 +234,8 @@ class Game():
                         self._set_label(_('keep trying'))
                         return False
             self._set_label(_('good work'))
+        self._smile()
+        return True
 
     def _grid_to_dot(self, pos):
         ''' calculate the dot index from a column and row in the grid '''
