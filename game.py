@@ -61,6 +61,7 @@ class Game():
         self._space = int(self._dot_size / 5.)
         self._orientation = 'horizontal'
         self.we_are_sharing = False
+        self.playing_with_robot = False
 
         # Generate the sprites we'll need...
         self._sprites = Sprites(self._canvas)
@@ -179,6 +180,10 @@ class Game():
             spr.type += 1
             spr.type %= 4
             spr.set_shape(self._new_dot(self._colors[spr.type]))
+
+            if self.playing_with_robot:
+                self._robot_play(spr)
+
             self._test_game_over()
 
             if self.we_are_sharing:
@@ -186,6 +191,50 @@ class Game():
                 self._parent.send_dot_click(self._dots.index(spr),
                                             spr.type)
         return True
+
+    def _robot_play(self, dot):
+        ''' Robot reflects dot clicked. '''
+        x, y = self._dot_to_grid(self._dots.index(dot))
+        if self._orientation == 'horizontal':
+            _logger.debug('%d: %d, %d' % (self._dots.index(dot), x, y))
+            x = TEN - x - 1
+            i = self._grid_to_dot((x, y))
+            _logger.debug('%d: %d, %d' % (i, x, y))
+            self._dots[i].type = dot.type
+            self._dots[i].set_shape(self._new_dot(self._colors[dot.type]))
+            if self.we_are_sharing:
+                _logger.debug('sending a robot click to the share')
+                self._parent.send_dot_click(i, dot.type)
+        elif self._orientation == 'vertical':
+            y = SIX - y - 1
+            i = self._grid_to_dot((x, y))
+            self._dots[i].type = dot.type
+            self._dots[i].set_shape(self._new_dot(self._colors[dot.type]))
+            if self.we_are_sharing:
+                _logger.debug('sending a robot click to the share')
+                self._parent.send_dot_click(i, dot.type)
+        else:
+            x = TEN - x - 1
+            i = self._grid_to_dot((x, y))
+            self._dots[i].type = dot.type
+            self._dots[i].set_shape(self._new_dot(self._colors[dot.type]))
+            if self.we_are_sharing:
+                _logger.debug('sending a robot click to the share')
+                self._parent.send_dot_click(i, dot.type)
+            y = SIX - y - 1
+            i = self._grid_to_dot((x, y))
+            self._dots[i].type = dot.type
+            self._dots[i].set_shape(self._new_dot(self._colors[dot.type]))
+            if self.we_are_sharing:
+                _logger.debug('sending a robot click to the share')
+                self._parent.send_dot_click(i, dot.type)
+            x = TEN - x - 1
+            i = self._grid_to_dot((x, y))
+            self._dots[i].type = dot.type
+            self._dots[i].set_shape(self._new_dot(self._colors[dot.type]))
+            if self.we_are_sharing:
+                _logger.debug('sending a robot click to the share')
+                self._parent.send_dot_click(i, dot.type)
 
     def remote_button_press(self, dot, color):
         ''' Receive a button press from a sharer '''
@@ -243,7 +292,7 @@ class Game():
 
     def _dot_to_grid(self, dot):
         ''' calculate the grid column and row for a dot '''
-        return [dot % TEN, int(dot / SIX)]
+        return [dot % TEN, int(dot / TEN)]
 
     def game_over(self, msg=_('Game over')):
         ''' Nothing left to do except show the results. '''

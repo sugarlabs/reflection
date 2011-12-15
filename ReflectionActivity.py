@@ -128,6 +128,13 @@ class ReflectionActivity(activity.Activity):
         self.status = label_factory(self.toolbar, '')
 
         if _have_toolbox:
+            separator_factory(toolbox.toolbar, False, True)
+
+        self.robot_button = button_factory(
+            'robot-off', self.toolbar, self._robot_cb,
+            tooltip= _('Play with the robot.'))
+
+        if _have_toolbox:
             separator_factory(toolbox.toolbar, True, False)
 
         if _have_toolbox:
@@ -139,6 +146,18 @@ class ReflectionActivity(activity.Activity):
     def _new_game_cb(self, button=None, orientation='horizontal'):
         ''' Start a new game. '''
         self._game.new_game(orientation)
+
+    def _robot_cb(self, button=None):
+        ''' Play with the computer (or not). '''
+        if not self._game.playing_with_robot:
+            self.set_robot_status(True, 'robot-on')
+        else:
+            self.set_robot_status(False, 'robot-off')
+
+    def set_robot_status(self, status, icon):
+        ''' Reset robot icon and status '''
+        self._game.playing_with_robot = status
+        self.robot_button.set_icon(icon)
 
     def write_file(self, file_path):
         """ Write the grid status to the Journal """
