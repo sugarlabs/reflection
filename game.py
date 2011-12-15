@@ -196,10 +196,8 @@ class Game():
         ''' Robot reflects dot clicked. '''
         x, y = self._dot_to_grid(self._dots.index(dot))
         if self._orientation == 'horizontal':
-            _logger.debug('%d: %d, %d' % (self._dots.index(dot), x, y))
             x = TEN - x - 1
             i = self._grid_to_dot((x, y))
-            _logger.debug('%d: %d, %d' % (i, x, y))
             self._dots[i].type = dot.type
             self._dots[i].set_shape(self._new_dot(self._colors[dot.type]))
             if self.we_are_sharing:
