@@ -93,15 +93,11 @@ class Game():
 
     def _all_clear(self):
         ''' Things to reinitialize when starting up a new game. '''
-        self._press = None
-        self.saw_game_over = False
-
-        # Clear dots
         for dot in self._dots:
             if dot.type > 0:
                 dot.type = 0
                 dot.set_shape(self._new_dot(self._colors[0]))
-                dot.set_label('')
+            dot.set_label('')
 
         self._set_orientation()
 
@@ -291,11 +287,6 @@ class Game():
     def _dot_to_grid(self, dot):
         ''' calculate the grid column and row for a dot '''
         return [dot % TEN, int(dot / TEN)]
-
-    def game_over(self, msg=_('Game over')):
-        ''' Nothing left to do except show the results. '''
-        self._set_label(msg)
-        self.saw_game_over = True
 
     def _expose_cb(self, win, event):
         self.do_expose_event(event)
