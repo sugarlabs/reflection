@@ -1,0 +1,62 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-12-07 14:46-0500\n"
+"PO-Revision-Date: 2012-01-24 06:02+0200\n"
+"Last-Translator: Aputsiaq Niels <aj@isit.gl>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.0.5\n"
+
+#: activity/activity.info:2
+msgid "Reflection"
+msgstr "Reflektion"
+
+#: game.py:119
+msgid "Click on the dots to make a horizontal reflection."
+msgstr "Klik på prikkerne for at foretage en vandret reflektion."
+
+#: game.py:122
+msgid "Click on the dots to make a vertical reflection."
+msgstr "Klik på prikkerne for at foretage en lodret reflektion."
+
+#: game.py:125
+msgid "Click on the dots to make a bilateral reflection."
+msgstr "Klik på prikkerne for at foretage en bilateral reflektion."
+
+#: game.py:200 game.py:209 game.py:217 game.py:223
+msgid "keep trying"
+msgstr "bliv ved med at forsøge"
+
+#: game.py:202 game.py:211 game.py:225
+msgid "good work"
+msgstr "godt arbejde"
+
+#: game.py:235
+msgid "Game over"
+msgstr "Spillet er slut"
+
+#: ReflectionActivity.py:101
+msgid "Game"
+msgstr "Spil"
+
+#: ReflectionActivity.py:109
+msgid "Start a new horizontal-reflection game."
+msgstr "Start et nyt spil med vandret reflektion."
+
+#: ReflectionActivity.py:114
+msgid "Start a new vertical-reflection game."
+msgstr "Start et nyt spil med lodret reflektion."
+
+#: ReflectionActivity.py:119
+msgid "Start a new bilateral-reflection game."
+msgstr "Start et nyt spil med bilateral reflektion."
