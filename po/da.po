@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-07 14:46-0500\n"
-"PO-Revision-Date: 2012-01-24 06:02+0200\n"
+"POT-Creation-Date: 2012-01-27 00:33-0500\n"
+"PO-Revision-Date: 2012-02-01 19:58+0200\n"
 "Last-Translator: Aputsiaq Niels <aj@isit.gl>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: da\n"
@@ -21,42 +21,45 @@ msgstr ""
 msgid "Reflection"
 msgstr "Reflektion"
 
-#: game.py:119
-msgid "Click on the dots to make a horizontal reflection."
-msgstr "Klik på prikkerne for at foretage en vandret reflektion."
-
-#: game.py:122
-msgid "Click on the dots to make a vertical reflection."
-msgstr "Klik på prikkerne for at foretage en lodret reflektion."
-
-#: game.py:125
-msgid "Click on the dots to make a bilateral reflection."
-msgstr "Klik på prikkerne for at foretage en bilateral reflektion."
-
-#: game.py:200 game.py:209 game.py:217 game.py:223
-msgid "keep trying"
-msgstr "bliv ved med at forsøge"
-
-#: game.py:202 game.py:211 game.py:225
-msgid "good work"
-msgstr "godt arbejde"
-
-#: game.py:235
-msgid "Game over"
-msgstr "Spillet er slut"
-
-#: ReflectionActivity.py:101
+#: ReflectionActivity.py:108
 msgid "Game"
 msgstr "Spil"
 
-#: ReflectionActivity.py:109
+#: ReflectionActivity.py:116
 msgid "Start a new horizontal-reflection game."
 msgstr "Start et nyt spil med vandret reflektion."
 
-#: ReflectionActivity.py:114
+#: ReflectionActivity.py:121
 msgid "Start a new vertical-reflection game."
 msgstr "Start et nyt spil med lodret reflektion."
 
-#: ReflectionActivity.py:119
+#: ReflectionActivity.py:126
 msgid "Start a new bilateral-reflection game."
 msgstr "Start et nyt spil med bilateral reflektion."
+
+#: ReflectionActivity.py:135
+msgid "Play with the robot."
+msgstr "Leg med robotten."
+
+#: game.py:118
+msgid "Click on the dots to make a horizontal reflection."
+msgstr "Klik på prikkerne for at foretage en vandret reflektion."
+
+#: game.py:121
+msgid "Click on the dots to make a vertical reflection."
+msgstr "Klik på prikkerne for at foretage en lodret reflektion."
+
+#: game.py:124
+msgid "Click on the dots to make a bilateral reflection."
+msgstr "Klik på prikkerne for at foretage en bilateral reflektion."
+
+#: game.py:253 game.py:263 game.py:271 game.py:277
+msgid "keep trying"
+msgstr "bliv ved med at forsøge"
+
+#: game.py:255 game.py:265 game.py:279
+msgid "good work"
+msgstr "godt arbejde"
+
+#~ msgid "Game over"
+#~ msgstr "Spillet er slut"
