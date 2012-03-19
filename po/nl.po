@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-15 00:33-0500\n"
+"PO-Revision-Date: 2012-01-28 04:44+0200\n"
+"Last-Translator: Chris <cjl@laptop.org>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.0.5\n"
+
+#: activity/activity.info:2
+msgid "Reflection"
+msgstr "Weerspiegeling"
+
+#: ReflectionActivity.py:108
+msgid "Game"
+msgstr "Spel"
+
+#: ReflectionActivity.py:116
+msgid "Start a new horizontal-reflection game."
+msgstr "Start een nieuw horizontaal-spiegelingsspel."
+
+#: ReflectionActivity.py:121
+msgid "Start a new vertical-reflection game."
+msgstr "Start een nieuw verticaal-spiegelingsspel."
+
+#: ReflectionActivity.py:126
+msgid "Start a new bilateral-reflection game."
+msgstr "Start een nieuw tweezijdig-spiegelingsspel."
+
+#: ReflectionActivity.py:135
+msgid "Play with the robot."
+msgstr ""
+
+#: game.py:118
+msgid "Click on the dots to make a horizontal reflection."
+msgstr "Klik op de punten om een horizontale spiegeling te maken."
+
+#: game.py:121
+msgid "Click on the dots to make a vertical reflection."
+msgstr "Klik op de punten om een verticale spiegeling te maken."
+
+#: game.py:124
+msgid "Click on the dots to make a bilateral reflection."
+msgstr "Klik op de punten om een tweezijdige spiegeling te maken."
+
+#: game.py:253 game.py:263 game.py:271 game.py:277
+msgid "keep trying"
+msgstr "blijf proberen"
+
+#: game.py:255 game.py:265 game.py:279
+msgid "good work"
+msgstr "goed werk"
+
+#~ msgid "Game over"
+#~ msgstr "Spel klaar"
