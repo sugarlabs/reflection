@@ -1,0 +1,62 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-15 00:33-0500\n"
+"PO-Revision-Date: 2012-02-12 23:02+0200\n"
+"Last-Translator: AlanJAS <alanjas@hotmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.0.5\n"
+
+#: activity/activity.info:2
+msgid "Reflection"
+msgstr "Reflexión"
+
+#: ReflectionActivity.py:108
+msgid "Game"
+msgstr "Juego"
+
+#: ReflectionActivity.py:116
+msgid "Start a new horizontal-reflection game."
+msgstr "Iniciar un nuevo juego de reflexión horizontal"
+
+#: ReflectionActivity.py:121
+msgid "Start a new vertical-reflection game."
+msgstr "Iniciar un nuevo juego de reflexión vertical."
+
+#: ReflectionActivity.py:126
+msgid "Start a new bilateral-reflection game."
+msgstr "Iniciar un nuevo juego de reflexión bilateral."
+
+#: ReflectionActivity.py:135
+msgid "Play with the robot."
+msgstr "Jugar con el robot."
+
+#: game.py:118
+msgid "Click on the dots to make a horizontal reflection."
+msgstr "Haz clic en los puntos para hacer una reflexión horizontal."
+
+#: game.py:121
+msgid "Click on the dots to make a vertical reflection."
+msgstr "Haz clic en los puntos para hacer una reflexión vertical."
+
+#: game.py:124
+msgid "Click on the dots to make a bilateral reflection."
+msgstr "Haz clic en los puntos para crear una reflexión bilateral."
+
+#: game.py:253 game.py:263 game.py:271 game.py:277
+msgid "keep trying"
+msgstr "sigue intentando"
+
+#: game.py:255 game.py:265 game.py:279
+msgid "good work"
+msgstr "buen trabajo"
