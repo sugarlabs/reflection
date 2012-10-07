@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-15 00:33-0500\n"
-"PO-Revision-Date: 2012-02-12 23:02+0200\n"
-"Last-Translator: AlanJAS <alanjas@hotmail.com>\n"
+"PO-Revision-Date: 2012-10-07 22:26+0200\n"
+"Last-Translator: Chris <cjl@laptop.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "Juego"
 
 #: ReflectionActivity.py:116
 msgid "Start a new horizontal-reflection game."
-msgstr "Iniciar un nuevo juego de reflexión horizontal"
+msgstr "Iniciar un nuevo juego de reflexión horizontal."
 
 #: ReflectionActivity.py:121
 msgid "Start a new vertical-reflection game."
