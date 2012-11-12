@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#Copyright (c) 2011 Walter Bender
+#Copyright (c) 2011-12 Walter Bender
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,10 +41,17 @@ class Game():
 
     def __init__(self, canvas, parent=None, colors=['#A0FFA0', '#FF8080']):
         self._activity = parent
-        self._colors = ['#FFFFFF']
-        self._colors.append(colors[0])
+        self._colors = [colors[0]]
         self._colors.append(colors[1])
+        self._colors.append('#FFFFFF')
         self._colors.append('#000000')
+        self._colors.append('#FF0000')
+        self._colors.append('#FF8000')
+        self._colors.append('#FFFF00')
+        self._colors.append('#00FF00')
+        self._colors.append('#00FFFF')
+        self._colors.append('#0000FF')
+        self._colors.append('#FF00FF')
 
         self._canvas = canvas
         if parent is not None:
@@ -70,6 +77,7 @@ class Game():
         self._press = False
         self.last_spr = None
         self._timer = None
+        self.roygbiv = False
 
         # Generate the sprites we'll need...
         self._sprites = Sprites(self._canvas)
@@ -82,8 +90,8 @@ class Game():
                     Sprite(self._sprites,
                            xoffset + x * (self._dot_size + self._space),
                            y * (self._dot_size + self._space),
-                           self._new_dot(self._colors[0])))
-                self._dots[-1].type = 0  # not set
+                           self._new_dot(self._colors[2])))
+                self._dots[-1].type = 2  # not set
                 self._dots[-1].set_label_attributes(40)
 
         self.vline = Sprite(self._sprites,
@@ -102,9 +110,8 @@ class Game():
     def _all_clear(self):
         ''' Things to reinitialize when starting up a new game. '''
         for dot in self._dots:
-            if dot.type > 0:
-                dot.type = 0
-                dot.set_shape(self._new_dot(self._colors[0]))
+            dot.type = 2
+            dot.set_shape(self._new_dot(self._colors[2]))
             dot.set_label('')
 
         self._set_orientation()
@@ -121,6 +128,7 @@ class Game():
             self.hline.set_layer(1000)
             self.vline.set_layer(1000)
 
+        '''
         if self._orientation == 'horizontal':
             self._set_label(
                 _('Click on the dots to make a horizontal reflection.'))
@@ -130,6 +138,7 @@ class Game():
         else:
             self._set_label(
                 _('Click on the dots to make a bilateral reflection.'))
+        '''
 
     def _initiating(self):
         return self._activity.initiating
@@ -143,7 +152,10 @@ class Game():
         # Fill in a few dots to start
         for i in range(int(TEN * SIX / 2)):
             n = int(uniform(0, TEN * SIX))
-            self._dots[n].type = int(uniform(0, 4))
+            if self.roygbiv:
+                self._dots[n].type = int(uniform(2, len(self._colors)))
+            else:
+                self._dots[n].type = int(uniform(0, 4))
             self._dots[n].set_shape(self._new_dot(
                     self._colors[self._dots[n].type]))
 
@@ -195,7 +207,11 @@ class Game():
 
     def _increment_dot(self, spr):
         spr.type += 1
-        spr.type %= 4
+        if self.roygbiv:
+            if spr.type >= len(self._colors):
+                spr.type = 2
+        else:
+            spr.type %= 4
         spr.set_shape(self._new_dot(self._colors[spr.type]))
 
         if self.playing_with_robot:

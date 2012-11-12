@@ -24,7 +24,8 @@ if _have_toolbox:
     from sugar.activity.widgets import ActivityToolbarButton
     from sugar.activity.widgets import StopButton
 
-from toolbar_utils import button_factory, label_factory, separator_factory
+from toolbar_utils import button_factory, label_factory, separator_factory, \
+                          radio_factory
 from utils import json_load, json_dump
 
 import telepathy
@@ -110,6 +111,12 @@ class ReflectionActivity(activity.Activity):
             toolbox.set_current_toolbar(1)
             self.toolbar = games_toolbar
 
+        my_colors = radio_factory(
+            'my-colors', self.toolbar, self._my_colors_cb, group=None)
+
+        radio_factory('toolbar-colors', self.toolbar,
+                      self._roygbiv_colors_cb, group=my_colors)
+
         self._new_game_button_h = button_factory(
             'new-game-horizontal', self.toolbar, self._new_game_cb,
             cb_arg='horizontal',
@@ -142,6 +149,16 @@ class ReflectionActivity(activity.Activity):
             stop_button.props.accelerator = '<Ctrl>q'
             toolbox.toolbar.insert(stop_button, -1)
             stop_button.show()
+
+    def _my_colors_cb(self, button=None):
+        if hasattr(self, '_game'):
+            self._game.roygbiv = False
+            self._game.new_game()
+
+    def _roygbiv_colors_cb(self, button=None):
+        if hasattr(self, '_game'):
+            self._game.roygbiv = True
+            self._game.new_game()
 
     def _new_game_cb(self, button=None, orientation='horizontal'):
         ''' Start a new game. '''
