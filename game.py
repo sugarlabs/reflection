@@ -12,6 +12,7 @@
 
 
 import gtk
+import gobject
 import cairo
 
 from random import uniform
@@ -28,6 +29,7 @@ except ImportError:
     GRID_CELL_SIZE = 0
 
 from sprites import Sprites, Sprite
+
 
 # Grid dimensions must be even
 TEN = 10
@@ -51,9 +53,12 @@ class Game():
 
         self._canvas.set_flags(gtk.CAN_FOCUS)
         self._canvas.add_events(gtk.gdk.BUTTON_PRESS_MASK)
+        self._canvas.add_events(gtk.gdk.BUTTON_RELEASE_MASK)
+        self._canvas.add_events(gtk.gdk.POINTER_MOTION_MASK)
         self._canvas.connect("expose-event", self._expose_cb)
         self._canvas.connect("button-press-event", self._button_press_cb)
-
+        self._canvas.connect("button-release-event", self._button_release_cb)
+        self._canvas.connect("motion-notify-event", self._mouse_move_cb)
         self._width = gtk.gdk.screen_width()
         self._height = gtk.gdk.screen_height() - (GRID_CELL_SIZE * 1.5)
         self._scale = self._width / (10 * DOT_SIZE * 1.2)
@@ -62,6 +67,9 @@ class Game():
         self._orientation = 'horizontal'
         self.we_are_sharing = False
         self.playing_with_robot = False
+        self._press = False
+        self.last_spr = None
+        self._timer = None
 
         # Generate the sprites we'll need...
         self._sprites = Sprites(self._canvas)
@@ -167,26 +175,55 @@ class Game():
     def _button_press_cb(self, win, event):
         win.grab_focus()
         x, y = map(int, event.get_coords())
+        self._press = True
 
         spr = self._sprites.find_sprite((x, y), inverse=True)
         if spr == None:
-            return
+            return True
 
+        self.last_spr = spr
         if spr.type is not None:
-            spr.type += 1
-            spr.type %= 4
-            spr.set_shape(self._new_dot(self._colors[spr.type]))
-
-            if self.playing_with_robot:
-                self._robot_play(spr)
-
-            self._test_game_over()
-
-            if self.we_are_sharing:
-                _logger.debug('sending a click to the share')
-                self._parent.send_dot_click(self._dots.index(spr),
-                                            spr.type)
+            if not self._timer is None:
+                gobject.source_remove(self._timer)
+            self._increment_dot(spr)
         return True
+
+    def _button_release_cb(self, win, event):
+        self._press = False
+        if not self._timer is None:
+            gobject.source_remove(self._timer)
+
+    def _increment_dot(self, spr):
+        spr.type += 1
+        spr.type %= 4
+        spr.set_shape(self._new_dot(self._colors[spr.type]))
+
+        if self.playing_with_robot:
+            self._robot_play(spr)
+
+        self._test_game_over()
+
+        if self.we_are_sharing:
+            _logger.debug('sending a click to the share')
+            self._parent.send_dot_click(self._dots.index(spr), spr.type)
+
+        self._timer = gobject.timeout_add(1000, self._increment_dot, spr)
+
+    def _mouse_move_cb(self, win, event):
+        """ Drag a tile with the mouse. """
+        if not self._press:
+            return
+        x, y = map(int, event.get_coords())
+        spr = self._sprites.find_sprite((x, y), inverse=True)
+        if spr == self.last_spr:
+            return True
+        if spr is None:
+            return True
+        if spr.type is not None:
+            self.last_spr = spr
+            if not self._timer is None:
+                gobject.source_remove(self._timer)
+            self._increment_dot(spr)
 
     def _robot_play(self, dot):
         ''' Robot reflects dot clicked. '''
