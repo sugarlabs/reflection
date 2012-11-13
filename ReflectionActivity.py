@@ -117,20 +117,23 @@ class ReflectionActivity(activity.Activity):
         radio_factory('toolbar-colors', self.toolbar,
                       self._roygbiv_colors_cb, group=my_colors)
 
-        self._new_game_button_h = button_factory(
+        new_game_button_h = radio_factory(
             'new-game-horizontal', self.toolbar, self._new_game_cb,
             cb_arg='horizontal',
-            tooltip=_('Start a new horizontal-reflection game.'))
+            tooltip=_('Start a new horizontal-reflection game.'),
+            group=None)
 
-        self._new_game_button_v = button_factory(
+        radio_factory(
             'new-game-vertical', self.toolbar, self._new_game_cb,
             cb_arg='vertical',
-            tooltip=_('Start a new vertical-reflection game.'))
+            tooltip=_('Start a new vertical-reflection game.'),
+            group=new_game_button_h)
 
-        self._new_game_button_b = button_factory(
+        radio_factory(
             'new-game-bilateral', self.toolbar, self._new_game_cb,
             cb_arg='bilateral',
-            tooltip=_('Start a new bilateral-reflection game.'))
+            tooltip=_('Start a new bilateral-reflection game.'),
+            group=new_game_button_h)
 
         self.status = label_factory(self.toolbar, '')
 
