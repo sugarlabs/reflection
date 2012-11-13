@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-13 00:34-0500\n"
-"PO-Revision-Date: 2012-02-01 19:58+0200\n"
+"PO-Revision-Date: 2012-11-13 15:07+0200\n"
 "Last-Translator: Aputsiaq Niels <aj@isit.gl>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: da\n"
@@ -24,7 +24,7 @@ msgstr "Reflektion"
 #. TRANS: "summary" option from activity.info file
 #. TRANS: "description" option from activity.info file
 msgid "draw patterns of reflective symmetry"
-msgstr ""
+msgstr "tegn mønstre med reflektiv symmetri"
 
 #: ReflectionActivity.py:109
 msgid "Game"
