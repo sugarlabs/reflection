@@ -6,60 +6,62 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-15 00:33-0500\n"
-"PO-Revision-Date: 2012-01-31 04:55+0200\n"
+"POT-Creation-Date: 2012-11-13 00:34-0500\n"
+"PO-Revision-Date: 2012-11-13 08:42+0200\n"
 "Last-Translator: Chris <cjl@laptop.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.0.5\n"
 
-#: activity/activity.info:2
+#. TRANS: "name" option from activity.info file
 msgid "Reflection"
 msgstr "Reflection"
 
-#: ReflectionActivity.py:108
+#. TRANS: "summary" option from activity.info file
+#. TRANS: "description" option from activity.info file
+msgid "draw patterns of reflective symmetry"
+msgstr "draw patterns of reflective symmetry"
+
+#: ReflectionActivity.py:109
 msgid "Game"
 msgstr "Game"
 
-#: ReflectionActivity.py:116
+#: ReflectionActivity.py:123
 msgid "Start a new horizontal-reflection game."
 msgstr "Start a new horizontal-reflection game."
 
-#: ReflectionActivity.py:121
+#: ReflectionActivity.py:129
 msgid "Start a new vertical-reflection game."
 msgstr "Start a new vertical-reflection game."
 
-#: ReflectionActivity.py:126
+#: ReflectionActivity.py:135
 msgid "Start a new bilateral-reflection game."
 msgstr "Start a new bilateral-reflection game."
 
-#: ReflectionActivity.py:135
+#: ReflectionActivity.py:145
 msgid "Play with the robot."
 msgstr "Play with the robot."
 
-#: game.py:118
-msgid "Click on the dots to make a horizontal reflection."
-msgstr "Click on the dots to make a horizontal reflection."
-
-#: game.py:121
-msgid "Click on the dots to make a vertical reflection."
-msgstr "Click on the dots to make a vertical reflection."
-
-#: game.py:124
-msgid "Click on the dots to make a bilateral reflection."
-msgstr "Click on the dots to make a bilateral reflection."
-
-#: game.py:253 game.py:263 game.py:271 game.py:277
+#: game.py:306 game.py:316 game.py:324 game.py:330
 msgid "keep trying"
 msgstr "keep trying"
 
-#: game.py:255 game.py:265 game.py:279
+#: game.py:308 game.py:318 game.py:332
 msgid "good work"
 msgstr "good work"
+
+#~ msgid "Click on the dots to make a horizontal reflection."
+#~ msgstr "Click on the dots to make a horizontal reflection."
+
+#~ msgid "Click on the dots to make a vertical reflection."
+#~ msgstr "Click on the dots to make a vertical reflection."
+
+#~ msgid "Click on the dots to make a bilateral reflection."
+#~ msgstr "Click on the dots to make a bilateral reflection."
 
 #~ msgid "Game over"
 #~ msgstr "Game over"
