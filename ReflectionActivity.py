@@ -1,4 +1,5 @@
 #Copyright (c) 2011 Walter Bender
+#Copyright (c) 2012 Ignacio Rodriguez
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -10,19 +11,18 @@
 # Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
 
 
-import gtk
-
-from sugar.activity import activity
-from sugar import profile
+from gi.repository import Gtk,Gdk
+from sugar3.activity import activity
+from sugar3 import profile
 try:
-    from sugar.graphics.toolbarbox import ToolbarBox
+    from sugar3.graphics.toolbarbox import ToolbarBox
     _have_toolbox = True
 except ImportError:
     _have_toolbox = False
 
 if _have_toolbox:
-    from sugar.activity.widgets import ActivityToolbarButton
-    from sugar.activity.widgets import StopButton
+    from sugar3.activity.widgets import ActivityToolbarButton
+    from sugar3.activity.widgets import StopButton
 
 from toolbar_utils import button_factory, label_factory, separator_factory, \
                           radio_factory
@@ -32,8 +32,8 @@ import telepathy
 import dbus
 from dbus.service import signal
 from dbus.gobject_service import ExportedGObject
-from sugar.presence import presenceservice
-from sugar.presence.tubeconn import TubeConnection
+from sugar3.presence import presenceservice
+from sugar3.presence.tubeconn import TubeConnection
 
 from gettext import gettext as _
 
@@ -68,9 +68,9 @@ class ReflectionActivity(activity.Activity):
         self._setup_dispatch_table()
 
         # Create a canvas
-        canvas = gtk.DrawingArea()
-        canvas.set_size_request(gtk.gdk.screen_width(), \
-                                gtk.gdk.screen_height())
+        canvas = Gtk.DrawingArea()
+        canvas.set_size_request(Gdk.Screen.width(), \
+                                Gdk.Screen.height())
         self.set_canvas(canvas)
         canvas.show()
         self.show_all()
@@ -103,7 +103,7 @@ class ReflectionActivity(activity.Activity):
 
         else:
             # Use pre-0.86 toolbar design
-            games_toolbar = gtk.Toolbar()
+            games_toolbar = Gtk.Toolbar()
             toolbox = activity.ActivityToolbox(self)
             self.set_toolbox(toolbox)
             toolbox.add_toolbar(_('Game'), games_toolbar)
@@ -117,23 +117,20 @@ class ReflectionActivity(activity.Activity):
         radio_factory('toolbar-colors', self.toolbar,
                       self._roygbiv_colors_cb, group=my_colors)
 
-        new_game_button_h = radio_factory(
+        self._new_game_button_h = button_factory(
             'new-game-horizontal', self.toolbar, self._new_game_cb,
             cb_arg='horizontal',
-            tooltip=_('Start a new horizontal-reflection game.'),
-            group=None)
+            tooltip=_('Start a new horizontal-reflection game.'))
 
-        radio_factory(
+        self._new_game_button_v = button_factory(
             'new-game-vertical', self.toolbar, self._new_game_cb,
             cb_arg='vertical',
-            tooltip=_('Start a new vertical-reflection game.'),
-            group=new_game_button_h)
+            tooltip=_('Start a new vertical-reflection game.'))
 
-        radio_factory(
+        self._new_game_button_b = button_factory(
             'new-game-bilateral', self.toolbar, self._new_game_cb,
             cb_arg='bilateral',
-            tooltip=_('Start a new bilateral-reflection game.'),
-            group=new_game_button_h)
+            tooltip=_('Start a new bilateral-reflection game.'))
 
         self.status = label_factory(self.toolbar, '')
 
@@ -177,7 +174,7 @@ class ReflectionActivity(activity.Activity):
     def set_robot_status(self, status, icon):
         ''' Reset robot icon and status '''
         self._game.playing_with_robot = status
-        self.robot_button.set_icon(icon)
+        self.robot_button.set_icon_name(icon)
 
     def write_file(self, file_path):
         """ Write the grid status to the Journal """

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #Copyright (c) 2011-12 Walter Bender
-
+#Copyright (c) 2012 Ignacio Rodríguez
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
@@ -11,8 +11,7 @@
 # Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
 
 
-import gtk
-import gobject
+from gi.repository import Gtk, GdkPixbuf, GObject, Gdk
 import cairo
 
 from random import uniform
@@ -23,7 +22,7 @@ import logging
 _logger = logging.getLogger('reflection-activity')
 
 try:
-    from sugar.graphics import style
+    from sugar3.graphics import style
     GRID_CELL_SIZE = style.GRID_CELL_SIZE
 except ImportError:
     GRID_CELL_SIZE = 0
@@ -58,16 +57,15 @@ class Game():
             parent.show_all()
             self._parent = parent
 
-        self._canvas.set_flags(gtk.CAN_FOCUS)
-        self._canvas.add_events(gtk.gdk.BUTTON_PRESS_MASK)
-        self._canvas.add_events(gtk.gdk.BUTTON_RELEASE_MASK)
-        self._canvas.add_events(gtk.gdk.POINTER_MOTION_MASK)
-        self._canvas.connect("expose-event", self._expose_cb)
+        self._canvas.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
+        self._canvas.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK)
+        self._canvas.add_events(Gdk.EventMask.POINTER_MOTION_MASK)
+        self._canvas.connect("draw", self.__draw_cb)
         self._canvas.connect("button-press-event", self._button_press_cb)
         self._canvas.connect("button-release-event", self._button_release_cb)
         self._canvas.connect("motion-notify-event", self._mouse_move_cb)
-        self._width = gtk.gdk.screen_width()
-        self._height = gtk.gdk.screen_height() - (GRID_CELL_SIZE * 1.5)
+        self._width = Gdk.Screen.width()
+        self._height = Gdk.Screen.height() - (GRID_CELL_SIZE * 1.5)
         self._scale = self._width / (10 * DOT_SIZE * 1.2)
         self._dot_size = int(DOT_SIZE * self._scale)
         self._space = int(self._dot_size / 5.)
@@ -189,21 +187,21 @@ class Game():
         x, y = map(int, event.get_coords())
         self._press = True
 
-        spr = self._sprites.find_sprite((x, y), inverse=True)
+        spr = self._sprites.find_sprite((x, y))
         if spr == None:
             return True
 
         self.last_spr = spr
         if spr.type is not None:
             if not self._timer is None:
-                gobject.source_remove(self._timer)
+                GObject.source_remove(self._timer)
             self._increment_dot(spr)
         return True
 
     def _button_release_cb(self, win, event):
         self._press = False
         if not self._timer is None:
-            gobject.source_remove(self._timer)
+            GObject.source_remove(self._timer)
 
     def _increment_dot(self, spr):
         spr.type += 1
@@ -223,14 +221,14 @@ class Game():
             _logger.debug('sending a click to the share')
             self._parent.send_dot_click(self._dots.index(spr), spr.type)
 
-        self._timer = gobject.timeout_add(1000, self._increment_dot, spr)
+        self._timer = GObject.timeout_add(1000, self._increment_dot, spr)
 
     def _mouse_move_cb(self, win, event):
         """ Drag a tile with the mouse. """
         if not self._press:
             return
         x, y = map(int, event.get_coords())
-        spr = self._sprites.find_sprite((x, y), inverse=True)
+        spr = self._sprites.find_sprite((x, y))
         if spr == self.last_spr:
             return True
         if spr is None:
@@ -238,7 +236,7 @@ class Game():
         if spr.type is not None:
             self.last_spr = spr
             if not self._timer is None:
-                gobject.source_remove(self._timer)
+                GObject.source_remove(self._timer)
             self._increment_dot(spr)
 
     def _robot_play(self, dot):
@@ -332,7 +330,8 @@ class Game():
             self._set_label(_('good work'))
         self._smile()
         return True
-
+    def __draw_cb(self,canvas,cr):
+		self._sprites.redraw_sprites(cr=cr)
     def _grid_to_dot(self, pos):
         ''' calculate the dot index from a column and row in the grid '''
         return pos[0] + pos[1] * TEN
@@ -355,7 +354,7 @@ class Game():
         self._sprites.redraw_sprites(cr=cr)
 
     def _destroy_cb(self, win, event):
-        gtk.main_quit()
+        Gtk.main_quit()
 
     def _new_dot(self, color):
         ''' generate a dot of a color color '''
@@ -374,8 +373,7 @@ class Game():
             surface = cairo.ImageSurface(cairo.FORMAT_ARGB32,
                                          self._svg_width, self._svg_height)
             context = cairo.Context(surface)
-            context = gtk.gdk.CairoContext(context)
-            context.set_source_pixbuf(pixbuf, 0, 0)
+            Gdk.cairo_set_source_pixbuf(context, pixbuf, 0, 0)
             context.rectangle(0, 0, self._svg_width, self._svg_height)
             context.fill()
             self._dot_cache[color] = surface
@@ -427,9 +425,12 @@ class Game():
 
 
 def svg_str_to_pixbuf(svg_string):
-    """ Load pixbuf from SVG string """
-    pl = gtk.gdk.PixbufLoader('svg')
-    pl.write(svg_string)
-    pl.close()
-    pixbuf = pl.get_pixbuf()
-    return pixbuf
+    try:
+        pl = GdkPixbuf.PixbufLoader.new_with_type('svg')
+        pl.write(svg_string)
+        pl.close()
+        pixbuf = pl.get_pixbuf()
+        return pixbuf
+    except:
+        print svg_string
+        return None
