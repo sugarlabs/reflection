@@ -1,9 +1,10 @@
 [Activity]
 name = Reflection
-activity_version = 11
+activity_version = 13
 license = GPLv3
 bundle_id = org.sugarlabs.RelfectionActivity
 exec = sugar-activity ReflectionActivity.ReflectionActivity
 icon = activity-reflection
 show_launcher = yes
 summary = draw patterns of reflective symmetry
+category = maths game
