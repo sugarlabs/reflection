@@ -34,7 +34,7 @@ try:
     from sugar3.presence.wrapper import CollabWrapper
     logging.error('USING SUGAR COLLAB WRAPPER!')
 except ImportError:
-    from collabwrapper.collabwrapper import CollabWrapper
+    from collabwrapper import CollabWrapper
 
 from gettext import gettext as _
 
