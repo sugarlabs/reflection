@@ -22,8 +22,7 @@ import logging
 _logger = logging.getLogger('reflection-activity')
 
 try:
-    from sugar3.graphics import style
-    GRID_CELL_SIZE = style.GRID_CELL_SIZE
+    from sugar3.graphics.style import GRID_CELL_SIZE
 except ImportError:
     GRID_CELL_SIZE = 0
 
@@ -65,8 +64,12 @@ class Game():
         self._canvas.connect("button-release-event", self._button_release_cb)
         self._canvas.connect("motion-notify-event", self._mouse_move_cb)
         self._width = Gdk.Screen.width()
-        self._height = Gdk.Screen.height() - (GRID_CELL_SIZE * 1.5)
-        self._scale = self._width / (10 * DOT_SIZE * 1.2)
+        self._height = Gdk.Screen.height() - GRID_CELL_SIZE
+
+        scale = [self._width / (10 * DOT_SIZE * 1.2),
+                 self._height / (6 * DOT_SIZE * 1.2)]
+        self._scale = min(scale)
+
         self._dot_size = int(DOT_SIZE * self._scale)
         self._space = int(self._dot_size / 5.)
         self._orientation = 'horizontal'
