@@ -11,7 +11,7 @@
 # Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
 
 
-from gi.repository import Gtk, GdkPixbuf, GObject, Gdk
+from gi.repository import Gtk, GdkPixbuf, GLib, Gdk
 import cairo
 
 from random import uniform
@@ -197,14 +197,14 @@ class Game():
         self.last_spr = spr
         if spr.type is not None:
             if not self._timer is None:
-                GObject.source_remove(self._timer)
+                GLib.source_remove(self._timer)
             self._increment_dot(spr)
         return True
 
     def _button_release_cb(self, win, event):
         self._press = False
         if not self._timer is None:
-            GObject.source_remove(self._timer)
+            GLib.source_remove(self._timer)
 
     def _increment_dot(self, spr):
         spr.type += 1
@@ -224,7 +224,7 @@ class Game():
             _logger.debug('sending a click to the share')
             self._parent.send_dot_click(self._dots.index(spr), spr.type)
 
-        self._timer = GObject.timeout_add(1000, self._increment_dot, spr)
+        self._timer = GLib.timeout_add(1000, self._increment_dot, spr)
 
     def _mouse_move_cb(self, win, event):
         """ Drag a tile with the mouse. """
@@ -239,7 +239,7 @@ class Game():
         if spr.type is not None:
             self.last_spr = spr
             if not self._timer is None:
-                GObject.source_remove(self._timer)
+                GLib.source_remove(self._timer)
             self._increment_dot(spr)
 
     def _robot_play(self, dot):
