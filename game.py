@@ -334,7 +334,7 @@ class Game():
         self._smile()
         return True
     def __draw_cb(self,canvas,cr):
-		self._sprites.redraw_sprites(cr=cr)
+        self._sprites.redraw_sprites(cr=cr)
     def _grid_to_dot(self, pos):
         ''' calculate the dot index from a column and row in the grid '''
         return pos[0] + pos[1] * TEN
