@@ -52,7 +52,7 @@ class ReflectionActivity(activity.Activity):
         ''' Initialize the toolbars and the game board '''
         try:
             super(ReflectionActivity, self).__init__(handle)
-        except dbus.exceptions.DBusException, e:
+        except dbus.exceptions.DBusException as e:
             _logger.error(str(e))
 
         self.nick = profile.get_nick_name()

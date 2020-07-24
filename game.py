@@ -187,7 +187,7 @@ class Game():
 
     def _button_press_cb(self, win, event):
         win.grab_focus()
-        x, y = map(int, event.get_coords())
+        x, y = list(map(int, event.get_coords()))
         self._press = True
 
         spr = self._sprites.find_sprite((x, y))
@@ -230,7 +230,7 @@ class Game():
         """ Drag a tile with the mouse. """
         if not self._press:
             return
-        x, y = map(int, event.get_coords())
+        x, y = list(map(int, event.get_coords()))
         spr = self._sprites.find_sprite((x, y))
         if spr == self.last_spr:
             return True
@@ -435,5 +435,5 @@ def svg_str_to_pixbuf(svg_string):
         pixbuf = pl.get_pixbuf()
         return pixbuf
     except:
-        print svg_string
+        print(svg_string)
         return None
