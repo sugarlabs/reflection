@@ -8,4 +8,4 @@ icon = activity-reflection
 show_launcher = yes
 summary = draw patterns of reflective symmetry
 category = maths game
-repository = https://github.com/walterbender/reflection
+repository = https://github.com/sugarlabs/reflection
