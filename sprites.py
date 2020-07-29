@@ -717,7 +717,6 @@ class Sprite:
         if cr is None:
             cr = self._sprites.cr
         if cr is None:
-            cr = self._sprites.cr
             print('sprite.draw: no Cairo context.')
             return
         for i, img in enumerate(self.images):
