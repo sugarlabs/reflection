@@ -196,17 +196,14 @@ class Game():
 
         self.last_spr = spr
         if spr.type is not None:
-            if not self._timer is None:
-                GLib.source_remove(self._timer)
             self._increment_dot(spr)
         return True
 
     def _button_release_cb(self, win, event):
         self._press = False
-        if not self._timer is None:
-            GLib.source_remove(self._timer)
+        self._stop_increment_dot()
 
-    def _increment_dot(self, spr):
+    def _increment_dot_cb(self, spr):
         spr.type += 1
         if self.roygbiv:
             if spr.type >= len(self._colors):
@@ -224,7 +221,18 @@ class Game():
             _logger.debug('sending a click to the share')
             self._parent.send_dot_click(self._dots.index(spr), spr.type)
 
-        self._timer = GLib.timeout_add(1000, self._increment_dot, spr)
+        return True  # call again
+
+    def _increment_dot(self, spr):
+        self._stop_increment_dot()
+
+        if self._increment_dot_cb(spr):
+            self._timer = GLib.timeout_add(1000, self._increment_dot_cb, spr)
+
+    def _stop_increment_dot(self):
+        if not self._timer is None:
+            GLib.source_remove(self._timer)
+        self._timer = None
 
     def _mouse_move_cb(self, win, event):
         """ Drag a tile with the mouse. """
@@ -238,8 +246,6 @@ class Game():
             return True
         if spr.type is not None:
             self.last_spr = spr
-            if not self._timer is None:
-                GLib.source_remove(self._timer)
             self._increment_dot(spr)
 
     def _robot_play(self, dot):
