@@ -1,5 +1,22 @@
 NEWS
 
+15
+
+* Regenerate POT file (Jui Pradhan),
+* Fix repository metadata (James Cameron),
+* Fix Warning: Source ID was not found when attempting to remove (James Cameron),
+* Add translations (Jui Pradhan),
+* Fix TypeError (Jui Pradhan),
+* Update collabwrapper (Jui Pradhan),
+* Port to python3 (Jui Pradhan),
+* Remove unnecessary imports (Jui Pradhan),
+* Create README.md (Jui Pradhan),
+* Fix PyGIWarnings and NameError (Jui Pradhan),
+* Port from GObject to GLib (Jui Pradhan),
+* Fix for: Rescaling of dots wasn't affected by screen height (Rahul Bothra),
+* Port setup.py to GTK+3 (Rahul Bothra),
+* Fix Import error (Rahul Bothra)
+
 14
 
 * Port to new collaboration wrap (erilyth)
